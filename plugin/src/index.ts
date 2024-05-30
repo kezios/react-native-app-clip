@@ -22,7 +22,7 @@ const withAppClip: ConfigPlugin<{
     deploymentTarget = "14.0",
     requestEphemeralUserNotification,
     requestLocationConfirmation,
-    appleSignin = true,
+    appleSignin = false,
     excludedPackages,
   }
 ) => {
