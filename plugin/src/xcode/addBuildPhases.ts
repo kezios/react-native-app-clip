@@ -1,5 +1,5 @@
 import { XcodeProject } from "@expo/config-plugins";
-import util from "util";
+import * as util from "util";
 
 export function addBuildPhases(
   xcodeProject: XcodeProject,

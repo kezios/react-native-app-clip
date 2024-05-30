@@ -1,7 +1,7 @@
 import { mergeContents } from "@expo/config-plugins/build/utils/generateCode";
 import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
-import fs from "fs";
-import path from "path";
+import * as fs from "fs";
+import * as path from "path";
 
 export const withPodfile: ConfigPlugin<{
   targetName: string;
@@ -38,9 +38,7 @@ export const withPodfile: ConfigPlugin<{
             :hermes_enabled => podfile_properties['expo.jsEngine'] == nil || podfile_properties['expo.jsEngine'] == 'hermes',
             :fabric_enabled => flags[:fabric_enabled],
             # An absolute path to your application root.
-            :app_path => "#{Pod::Config.instance.installation_root}/..",
-            # Note that if you have use_frameworks! enabled, Flipper will not work if enabled
-            :flipper_configuration => flipper_config
+            :app_path => "#{Pod::Config.instance.installation_root}/.."
           )
         end
       `;
