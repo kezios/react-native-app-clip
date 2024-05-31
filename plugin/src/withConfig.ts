@@ -5,6 +5,10 @@ import {
   getAppClipEntitlements,
 } from "./lib/getAppClipEntitlements";
 
+/**
+  Add to expo's app.config.json and app extension in eas.build.experimental.ios.appExtensions
+**/
+
 export const withConfig: ConfigPlugin<{
   bundleIdentifier: string;
   targetName: string;

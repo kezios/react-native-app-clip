@@ -3,6 +3,13 @@ import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
 import * as fs from "fs";
 import * as path from "path";
 
+/**
+  Adds a section to the Podfile that configures the target for the specified targetName.
+  It includes the use of Expo modules, native modules, and React Native settings.
+  The code also sets up flags and paths for the target.
+**/
+
+
 export const withPodfile: ConfigPlugin<{
   targetName: string;
   excludedPackages?: string[];

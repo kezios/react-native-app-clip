@@ -8,6 +8,7 @@ export const withAppClipPlist: ConfigPlugin<{
   deploymentTarget: string;
   requestEphemeralUserNotification?: boolean;
   requestLocationConfirmation?: boolean;
+  expoRuntimeVersion?: string;
 }> = (
   config,
   {
@@ -15,6 +16,7 @@ export const withAppClipPlist: ConfigPlugin<{
     deploymentTarget,
     requestEphemeralUserNotification = false,
     requestLocationConfirmation = false,
+    expoRuntimeVersion,
   }
 ) => {
   return withInfoPlist(config, (config) => {
@@ -65,10 +67,16 @@ export const withAppClipPlist: ConfigPlugin<{
 
     // Expo.plist
     const expoPlistFilePath = path.join(targetPath, "Supporting/Expo.plist");
+
+    const existingAppRuntimeVersion = config.runtimeVersion || config.ios?.infoPlist?.EXUpdatesRuntimeVersion
+    const expoUpdateConfig = config.updates
+
     const expoPlist: InfoPlist = {
-      EXUpdatesRuntimeVersion: "exposdk:48.0.0", // TODO
-      // EXUpdatesURL: "", // TODO
-      EXUpdatesEnabled: false,
+      EXUpdatesRuntimeVersion: expoRuntimeVersion ?? typeof existingAppRuntimeVersion === "string" ? existingAppRuntimeVersion : "exposdk:51.0.0",
+      EXUpdatesURL: expoUpdateConfig?.url,
+      EXUpdatesEnabled: expoUpdateConfig?.enabled ?? !!expoUpdateConfig?.url,
+      EXUpdatesCheckOnLaunch: expoUpdateConfig?.checkAutomatically ?? "ALWAYS",
+      EXUpdatesLaunchWaitMs: 0,
     };
 
     fs.mkdirSync(path.dirname(expoPlistFilePath), {
