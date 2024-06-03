@@ -24,6 +24,7 @@ export function addBuildPhases(
   const buildPhaseFiles = ["AppDelegate.mm", "main.m"];
 
   // Add shell script build phase "Start Packager"
+  // Start Metro Packager if not running
   xcodeProject.addBuildPhase(
     [],
     "PBXShellScriptBuildPhase",
@@ -39,6 +40,7 @@ export function addBuildPhases(
   );
 
   // Sources build phase
+  // Compile files contained in buildPhaseFiles
   xcodeProject.addBuildPhase(
     buildPhaseFiles,
     "PBXSourcesBuildPhase",

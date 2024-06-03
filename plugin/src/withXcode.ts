@@ -8,6 +8,10 @@ import { addTargetDependency } from "./xcode/addTargetDependency";
 import { addPbxGroup } from "./xcode/addPbxGroup";
 import { addBuildPhases } from "./xcode/addBuildPhases";
 
+/*
+  Update the XCode project with the App Clip target.
+*/
+
 export const withXcode: ConfigPlugin<{
   name: string;
   targetName: string;

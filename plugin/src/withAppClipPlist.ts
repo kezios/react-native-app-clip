@@ -3,6 +3,10 @@ import { ConfigPlugin, InfoPlist, withInfoPlist } from "@expo/config-plugins";
 import * as fs from "fs";
 import * as path from "path";
 
+/**
+  Add the App Clip Info.plist configuration and Expo.plist configuration.
+**/
+
 export const withAppClipPlist: ConfigPlugin<{
   targetName: string;
   deploymentTarget: string;

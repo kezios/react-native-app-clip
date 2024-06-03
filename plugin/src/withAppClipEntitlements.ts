@@ -5,6 +5,10 @@ import * as path from "path";
 
 import { getAppClipEntitlements } from "./lib/getAppClipEntitlements";
 
+/*
+  Add the App Clip entitlements configuration.
+*/
+
 export const withAppClipEntitlements: ConfigPlugin<{
   targetName: string;
   targetPath: string;
