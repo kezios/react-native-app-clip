@@ -15,6 +15,7 @@ const withAppClip: ConfigPlugin<{
   appleSignin?: boolean;
   excludedPackages: string[];
   expoRuntimeVersion?: string;
+  infoPlistAdditionnalEntries?: Record<string,string | number | boolean | undefined >;
 }> = (
   config,
   {
@@ -26,6 +27,7 @@ const withAppClip: ConfigPlugin<{
     appleSignin = false,
     excludedPackages,
     expoRuntimeVersion,
+    infoPlistAdditionnalEntries,
   }
 ) => {
   const bundleIdentifier = `${config.ios?.bundleIdentifier}.Clip`;
@@ -50,7 +52,8 @@ const withAppClip: ConfigPlugin<{
         deploymentTarget,
         requestEphemeralUserNotification,
         requestLocationConfirmation,
-        expoRuntimeVersion
+        expoRuntimeVersion,
+        infoPlistAdditionnalEntries
       },
     ],
     [

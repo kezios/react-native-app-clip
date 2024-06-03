@@ -13,6 +13,7 @@ export const withAppClipPlist: ConfigPlugin<{
   requestEphemeralUserNotification?: boolean;
   requestLocationConfirmation?: boolean;
   expoRuntimeVersion?: string;
+  infoPlistAdditionnalEntries?: Record<string,string | number | boolean | undefined >;
 }> = (
   config,
   {
@@ -21,6 +22,7 @@ export const withAppClipPlist: ConfigPlugin<{
     requestEphemeralUserNotification = false,
     requestLocationConfirmation = false,
     expoRuntimeVersion,
+    infoPlistAdditionnalEntries,
   }
 ) => {
   return withInfoPlist(config, (config) => {
@@ -57,6 +59,7 @@ export const withAppClipPlist: ConfigPlugin<{
       UILaunchStoryboardName: "SplashScreen",
       UIRequiresFullScreen: true,
       MinimumOSVersion: deploymentTarget,
+      ...infoPlistAdditionnalEntries
     };
 
     config.ios?.infoPlist &&
