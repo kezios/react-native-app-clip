@@ -83,6 +83,7 @@ export const withAppClipPlist: ConfigPlugin<{
       EXUpdatesURL: expoUpdateConfig?.url,
       EXUpdatesEnabled: expoUpdateConfig?.enabled ?? !!expoUpdateConfig?.url,
       EXUpdatesCheckOnLaunch: expoUpdateConfig?.checkAutomatically ?? "ALWAYS",
+      EXUpdatesRequestHeaders: expoUpdateConfig?.requestHeaders,
       EXUpdatesLaunchWaitMs: 0,
     };
 
