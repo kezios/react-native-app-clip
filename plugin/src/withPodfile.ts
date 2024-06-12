@@ -46,8 +46,7 @@ export const withPodfile: ConfigPlugin<{
             :fabric_enabled => flags[:fabric_enabled],
             # An absolute path to your application root.
             :app_path => "#{Pod::Config.instance.installation_root}/..",
-            # Note that if you have use_frameworks! enabled, Flipper will not work if enabled
-            :flipper_configuration => flipper_config
+            :privacy_file_aggregation_enabled => podfile_properties['apple.privacyManifestAggregationEnabled'] != 'false',
           )
         end
       `;
