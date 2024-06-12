@@ -1,4 +1,4 @@
-import type { XcodeProject } from "@expo/config-plugins";
+import { XcodeProject } from "@expo/config-plugins";
 
 export function addXCConfigurationList(
   xcodeProject: XcodeProject,
@@ -14,9 +14,9 @@ export function addXCConfigurationList(
     currentProjectVersion: string;
     bundleIdentifier: string;
     deploymentTarget: string;
-  },
+  }
 ) {
-  const commonBuildSettings: Record<string, string> = {
+  const commonBuildSettings: any = {
     ASSETCATALOG_COMPILER_APPICON_NAME: "AppIcon",
     CLANG_ENABLE_MODULES: "YES",
     CURRENT_PROJECT_VERSION: `"${currentProjectVersion}"`,
@@ -52,7 +52,7 @@ export function addXCConfigurationList(
   const xCConfigurationList = xcodeProject.addXCConfigurationList(
     buildConfigurationsList,
     "Release",
-    `Build configuration list for PBXNativeTarget "${targetName}"`,
+    `Build configuration list for PBXNativeTarget "${targetName}"`
   );
 
   return xCConfigurationList;

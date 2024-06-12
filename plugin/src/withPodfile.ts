@@ -1,7 +1,7 @@
 import { mergeContents } from "@expo/config-plugins/build/utils/generateCode";
-import { type ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
-import fs from "node:fs";
-import path from "node:path";
+import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
+import fs from "fs";
+import path from "path";
 
 /**
   Adds a section to the Podfile that configures the target for the specified targetName.
@@ -14,14 +14,12 @@ export const withPodfile: ConfigPlugin<{
   targetName: string;
   excludedPackages?: string[];
 }> = (config, { targetName, excludedPackages }) => {
-  // return config;
-
   return withDangerousMod(config, [
     "ios",
     (config) => {
       const podFilePath = path.join(
         config.modRequest.platformProjectRoot,
-        "Podfile",
+        "Podfile"
       );
       let podfileContent = fs.readFileSync(podFilePath).toString();
 
@@ -29,22 +27,27 @@ export const withPodfile: ConfigPlugin<{
         excludedPackages && excludedPackages.length > 0
           ? `exclude = ["${excludedPackages.join(`", "`)}"]
       use_expo_modules!(exclude: exclude)`
-          : "use_expo_modules!";
+          : `use_expo_modules!`;
 
       const appClipTarget = `
-        target '${targetName}' do
+        target '${targetName}' do          
           ${useExpoModules}
           config = use_native_modules!
-
+          
           use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
           use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
-
+          
+          # Flags change depending on the env values.
+          flags = get_default_flags()
+          
           use_react_native!(
             :path => config[:reactNativePath],
             :hermes_enabled => podfile_properties['expo.jsEngine'] == nil || podfile_properties['expo.jsEngine'] == 'hermes',
+            :fabric_enabled => flags[:fabric_enabled],
             # An absolute path to your application root.
             :app_path => "#{Pod::Config.instance.installation_root}/..",
-            :privacy_file_aggregation_enabled => podfile_properties['apple.privacyManifestAggregationEnabled'] != 'false',
+            # Note that if you have use_frameworks! enabled, Flipper will not work if enabled
+            :flipper_configuration => flipper_config
           )
         end
       `;
@@ -58,8 +61,8 @@ export const withPodfile: ConfigPlugin<{
         tag: "react-native-app-clip-2",
         src: podfileContent,
         newSrc: appClipTarget,
-        anchor: "Pod::UI.warn e",
-        offset: 3,
+        anchor: `Pod::UI.warn e`,
+        offset: 5,
         comment: "#",
       }).contents;
 

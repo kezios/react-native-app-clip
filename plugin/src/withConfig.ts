@@ -1,26 +1,26 @@
-import type { ConfigPlugin } from "@expo/config-plugins";
-import { getAppClipEntitlements } from "./lib/getAppClipEntitlements";
+import { ConfigPlugin } from "@expo/config-plugins";
 
-/**
-  Add to expo's app.config.json and app extension in eas.build.experimental.ios.appExtensions
-**/
+import {
+  addApplicationGroupsEntitlement,
+  getAppClipEntitlements,
+} from "./lib/getAppClipEntitlements";
 
 export const withConfig: ConfigPlugin<{
-  targetName: string;
   bundleIdentifier: string;
+  targetName: string;
+  groupIdentifier?: string;
   appleSignin: boolean;
-  applePayMerchantIds: string[];
 }> = (
   config,
-  { targetName, bundleIdentifier, appleSignin, applePayMerchantIds },
+  { bundleIdentifier, targetName, groupIdentifier, appleSignin }
 ) => {
   let configIndex: null | number = null;
   config.extra?.eas?.build?.experimental?.ios?.appExtensions?.forEach(
-    (ext: { targetName: string }, index: number) => {
+    (ext: any, index: number) => {
       if (ext.targetName === targetName) {
         configIndex = index;
       }
-    },
+    }
   );
 
   if (!configIndex) {
@@ -50,7 +50,7 @@ export const withConfig: ConfigPlugin<{
     configIndex = 0;
   }
 
-  if (configIndex !== null && config.extra) {
+  if (configIndex != null && config.extra) {
     const appClipConfig =
       config.extra.eas.build.experimental.ios.appExtensions[configIndex];
 
@@ -58,7 +58,6 @@ export const withConfig: ConfigPlugin<{
       ...appClipConfig.entitlements,
       ...getAppClipEntitlements(config.ios, {
         appleSignin,
-        applePayMerchantIds,
         // groupIdentifier, // Throws an error in EAS
       }),
     };
@@ -68,10 +67,10 @@ export const withConfig: ConfigPlugin<{
   config.ios = {
     ...config.ios,
     entitlements: {
-      // ...addApplicationGroupsEntitlement(
-      //   config.ios?.entitlements ?? {},
-      //   groupIdentifier,
-      // ),
+      ...addApplicationGroupsEntitlement(
+        config.ios?.entitlements ?? {},
+        groupIdentifier
+      ),
       "com.apple.developer.associated-appclip-app-identifiers": [
         `$(AppIdentifierPrefix)${bundleIdentifier}`,
       ],

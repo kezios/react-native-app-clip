@@ -1,12 +1,12 @@
-import { type ConfigPlugin, withXcodeProject } from "@expo/config-plugins";
+import { ConfigPlugin, withXcodeProject } from "@expo/config-plugins";
 
-import { addBuildPhases } from "./xcode/addBuildPhases";
-import { addPbxGroup } from "./xcode/addPbxGroup";
+import { addXCConfigurationList } from "./xcode/addXCConfigurationList";
 import { addProductFile } from "./xcode/addProductFile";
-import { addTargetDependency } from "./xcode/addTargetDependency";
 import { addToPbxNativeTargetSection } from "./xcode/addToPbxNativeTargetSection";
 import { addToPbxProjectSection } from "./xcode/addToPbxProjectSection";
-import { addXCConfigurationList } from "./xcode/addXCConfigurationList";
+import { addTargetDependency } from "./xcode/addTargetDependency";
+import { addPbxGroup } from "./xcode/addPbxGroup";
+import { addBuildPhases } from "./xcode/addBuildPhases";
 
 /*
   Update the XCode project with the App Clip target.
@@ -28,7 +28,7 @@ export const withXcode: ConfigPlugin<{
     const xCConfigurationList = addXCConfigurationList(xcodeProject, {
       name,
       targetName,
-      currentProjectVersion: config.ios?.buildNumber || "1",
+      currentProjectVersion: config.ios!.buildNumber || "1",
       bundleIdentifier,
       deploymentTarget,
     });

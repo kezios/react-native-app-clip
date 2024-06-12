@@ -1,16 +1,9 @@
 import plist from "@expo/plist";
-import {
-  type InfoPlist,
-  withInfoPlist,
-  type ConfigPlugin,
-} from "@expo/config-plugins";
-import fs from "node:fs";
-import path from "node:path";
+import { ConfigPlugin, InfoPlist, withInfoPlist } from "@expo/config-plugins";
+import fs from "fs";
+import path from "path";
 
-/**
-  Add the App Clip Info.plist configuration and Expo.plist configuration.
-**/
-export const withPlist: ConfigPlugin<{
+export const withAppClipPlist: ConfigPlugin<{
   targetName: string;
   deploymentTarget: string;
   requestEphemeralUserNotification?: boolean;
@@ -31,7 +24,7 @@ export const withPlist: ConfigPlugin<{
   return withInfoPlist(config, (config) => {
     const targetPath = path.join(
       config.modRequest.platformProjectRoot,
-      targetName,
+      targetName
     );
 
     // Info.plist
@@ -65,13 +58,10 @@ export const withPlist: ConfigPlugin<{
       ...infoPlistAdditionnalEntries
     };
 
-    if (config.ios?.infoPlist) {
-      for (const key of Object.keys(config.ios?.infoPlist)) {
-        if (config.ios?.infoPlist) {
-          infoPlist[key] = config.ios.infoPlist[key];
-        }
-      }
-    }
+    config.ios?.infoPlist &&
+      Object.keys(config.ios?.infoPlist).forEach((key: string) => {
+        config.ios?.infoPlist && (infoPlist[key] = config.ios.infoPlist[key]);
+      });
 
     fs.mkdirSync(path.dirname(filePath), {
       recursive: true,

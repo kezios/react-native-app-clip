@@ -1,6 +1,6 @@
-import type { XcodeProject } from "@expo/config-plugins";
-import fs from "node:fs";
-import path from "node:path";
+import { XcodeProject } from "@expo/config-plugins";
+import fs from "fs";
+import path from "path";
 
 export function addPbxGroup(
   xcodeProject: XcodeProject,
@@ -8,7 +8,7 @@ export function addPbxGroup(
     projectName,
     targetName,
     platformProjectRoot,
-  }: { projectName: string; targetName: string; platformProjectRoot: string },
+  }: { projectName: string; targetName: string; platformProjectRoot: string }
 ) {
   const targetPath = path.join(platformProjectRoot, targetName);
 
@@ -23,16 +23,16 @@ export function addPbxGroup(
     "main.m",
   ];
 
-  for (const file of filesToCopy) {
+  filesToCopy.forEach((file) => {
     const source = path.join(platformProjectRoot, projectName, file);
     copyFileSync(source, targetPath);
-  }
+  });
 
   // Copy Images.xcassets
   const imagesXcassetsSource = path.join(
     platformProjectRoot,
     projectName,
-    "Images.xcassets",
+    "Images.xcassets"
   );
   copyFolderRecursiveSync(imagesXcassetsSource, targetPath);
 
@@ -50,17 +50,17 @@ export function addPbxGroup(
       /* "main.jsbundle", */
     ],
     targetName,
-    targetName,
+    targetName
   );
 
   // Add PBXGroup to top level group
-  const groups = xcodeProject.hash.project.objects.PBXGroup;
+  const groups = xcodeProject.hash.project.objects["PBXGroup"];
   if (pbxGroupUuid) {
-    for (const key of Object.keys(groups)) {
+    Object.keys(groups).forEach(function (key) {
       if (groups[key].name === undefined && groups[key].path === undefined) {
         xcodeProject.addToPbxGroup(pbxGroupUuid, key);
       }
-    }
+    });
   }
 }
 
@@ -82,13 +82,13 @@ function copyFolderRecursiveSync(source: string, target: string) {
 
   if (fs.lstatSync(source).isDirectory()) {
     const files = fs.readdirSync(source);
-    for (const file of files) {
+    files.forEach((file) => {
       const currentPath = path.join(source, file);
       if (fs.lstatSync(currentPath).isDirectory()) {
         copyFolderRecursiveSync(currentPath, targetPath);
       } else {
         copyFileSync(currentPath, targetPath);
       }
-    }
+    });
   }
 }
