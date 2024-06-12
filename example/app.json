@@ -35,16 +35,12 @@
           "requestEphemeralUserNotification": true,
           "requestLocationConfirmation": true,
           "appleSignin": true,
-          "applePayMerchantIds": ["dev.example.app"],
-          "excludedPackages": ["@shopify/react-native-skia"]
-        }
-      ],
-      [
-        "expo-build-properties",
-        {
-          "ios": {
-            "newArchEnabled": true
-          }
+          "applePayMerchantIds": [
+            "dev.example.app"
+          ],
+          "excludedPackages": [
+            "@shopify/react-native-skia"
+          ]
         }
       ]
     ]
