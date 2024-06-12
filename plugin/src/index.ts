@@ -13,7 +13,7 @@ const withAppClip: ConfigPlugin<{
   requestEphemeralUserNotification?: boolean;
   requestLocationConfirmation?: boolean;
   appleSignin?: boolean;
-  excludedPackages: string[];
+  excludedPackages?: string[];
   expoRuntimeVersion?: string;
   infoPlistAdditionnalEntries?: Record<string,string | number | boolean | undefined >;
 }> = (

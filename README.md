@@ -31,7 +31,6 @@ In your app’s Expo config (app.json, or app.config.js), make sure that react-n
 - **requestEphemeralUserNotification** (boolean): Enables notifications for the App Clip (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/enabling_notifications_in_app_clips))
 - **requestLocationConfirmation** (boolean): Allow App Clip access to location data (see [Apple Developer Docs](https://developer.apple.com/documentation/app_clips/confirming_the_user_s_physical_location))
 - **appleSignin** (boolean): Enable "Sign in with Apple" for the App Clip
-- **applePayMerchantIds** (string[]): Enable Apple Pay capability with provided merchant IDs.
 - **excludedPackages** (string[]): Packages to exclude from autolinking for the App Clip to reduce bundle size (see below).
 - **expoRuntimeVersion** (string): The Expo runtime version to use for the App Clip. If not set, `expo.runtimeVersion` of `app.json` will be set if not in managed environement. As a last resort, the value will be `exposdk:51.0.0`.
 - **infoPlistAdditionnalEntries** (Record<string,string | number | boolean | undefined >): Add additional entries to the Info.plist of the App Clip.

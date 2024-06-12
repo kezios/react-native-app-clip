@@ -21,8 +21,9 @@ export function getAppClipEntitlements(
 
   addApplicationGroupsEntitlement(entitlements, groupIdentifier);
 
-  appleSignin &&
-    (entitlements["com.apple.developer.applesignin"] = ["Default"]);
+  if (appleSignin) {
+    entitlements["com.apple.developer.applesignin"] = ["Default"];
+  }
 
   if (iosConfig?.associatedDomains) {
     entitlements["com.apple.developer.associated-domains"] =

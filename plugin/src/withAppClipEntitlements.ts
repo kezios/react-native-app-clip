@@ -10,11 +10,7 @@ export const withAppClipEntitlements: ConfigPlugin<{
   targetPath: string;
   groupIdentifier: string;
   appleSignin: boolean;
-  applePayMerchantIds: string[];
-}> = (
-  config,
-  { targetName, groupIdentifier, appleSignin, applePayMerchantIds },
-) => {
+}> = (config, { targetName, groupIdentifier, appleSignin }) => {
   return withInfoPlist(config, (config) => {
     const targetPath = path.join(
       config.modRequest.platformProjectRoot,
