@@ -13,7 +13,7 @@ export function getAppClipEntitlements(
   const appBundleIdentifier = iosConfig?.bundleIdentifier;
 
   const entitlements: InfoPlist = {
-    "com.apple.developer.paren t-application-identifiers": [
+    "com.apple.developer.parent-application-identifiers": [
       `$(AppIdentifierPrefix)${appBundleIdentifier}`,
     ],
     "com.apple.developer.on-demand-install-capable": true,
