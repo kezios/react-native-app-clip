@@ -13,10 +13,11 @@ export function getAppClipEntitlements(
   const appBundleIdentifier = iosConfig?.bundleIdentifier;
 
   const entitlements: InfoPlist = {
-    "com.apple.developer.parent-application-identifiers": [
+    "com.apple.developer.paren t-application-identifiers": [
       `$(AppIdentifierPrefix)${appBundleIdentifier}`,
     ],
     "com.apple.developer.on-demand-install-capable": true,
+    "aps-environment": "production",
   };
 
   addApplicationGroupsEntitlement(entitlements, groupIdentifier);
