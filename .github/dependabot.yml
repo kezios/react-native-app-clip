@@ -3,3 +3,5 @@ updates:
   - package-ecosystem: "npm"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
